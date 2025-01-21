@@ -5,6 +5,8 @@ const {
   getBlog,
   postPublishBlog,
   getAllPublishedBlogs,
+  postNewBlog,
+  editBlog,
 } = require("../controllers/blogController");
 const {
   addNewComment,
@@ -21,7 +23,7 @@ const blogRouter = Router();
 
 // /blog/new GET new blog page
 // /blogs POST write blog page
-// /blogs UPDATE edit blog page
+// /blogs:id UPDATE edit blog page
 // /blogs:id DELETE delete blog page
 
 blogRouter.get("", async (req, res) => {
@@ -29,15 +31,16 @@ blogRouter.get("", async (req, res) => {
   await getAllPublishedBlogs(req, res);
 });
 
-blogRouter.post("", async (req, res) => {
-  // draft/publish a new blog
-  const publishing = req.body.publish;
-  if (publishing) {
-    await postPublishBlog(req, res);
-  } else {
-    await postDraftBlog(req, res);
-  }
-  return res.status(200).json({ redirect: "/" });
+// create new blog
+blogRouter.post("/new", async (req, res) => {
+  // create a new blog page
+  await postNewBlog(req, res);
+});
+
+// can use this to either publish/draft a page
+blogRouter.put("/:id", async (req, res) => {
+  //update preexisitng blog with id
+  await editBlog(req, res);
 });
 
 blogRouter.get("/:id", async (req, res) => {
@@ -46,10 +49,6 @@ blogRouter.get("/:id", async (req, res) => {
   const comments = await getComments(req, res);
 
   return res.status(200).json({ blog: blog, comments, comments });
-});
-
-blogRouter.put("/:id", async (req, res) => {
-  //update preexisitng blog with id
 });
 
 blogRouter.delete("/:id", async (req, res) => {

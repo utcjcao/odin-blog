@@ -52,7 +52,7 @@ async function deleteBlog(blogId) {
 }
 
 async function postBlogPost(ownerUsername, title, content, published) {
-  await prisma.blogs.create({
+  const newBlogPost = await prisma.blogs.create({
     data: {
       ownerUsername: ownerUsername,
       title: title,
@@ -60,6 +60,7 @@ async function postBlogPost(ownerUsername, title, content, published) {
       published: published,
     },
   });
+  return newBlogPost;
 }
 
 async function postComment(blogId, ownerUsername, content) {
