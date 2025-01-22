@@ -83,21 +83,32 @@ async function getCommentsForBlog(blogId) {
 }
 
 async function postUser(username, password, admin) {
-  await prisma.blogs.create({
+  const user = await prisma.blogs.create({
     data: {
       username: username,
       password: password,
       admin: admin,
     },
   });
+  return user;
 }
 
 async function getUser(username) {
-  await prisma.blogs.findFirst({
+  const user = await prisma.blogs.findFirst({
     where: {
       username: username,
     },
   });
+  return user;
+}
+
+async function getUserById(id) {
+  const user = await prisma.blogs.findFirst({
+    where: {
+      id: id,
+    },
+  });
+  return user;
 }
 
 module.exports = {
@@ -109,6 +120,7 @@ module.exports = {
   postBlogPost,
   postUser,
   getUser,
+  getUserById,
   postComment,
   getCommentsForBlog,
 };
