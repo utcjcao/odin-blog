@@ -94,7 +94,7 @@ class blogController {
     } catch (error) {
       return res
         .status(500)
-        .json({ message: "An error occured trying to edit the blog." });
+        .json({ message: "An error occured trying to delete the blog." });
     }
   };
 }
