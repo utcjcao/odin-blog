@@ -5,12 +5,18 @@ require("dotenv").config();
 
 class userController {
   constructor() {}
-  getLoginPage = async (req, res) => {};
-  getSignUp = async (req, res) => {};
+  getLoginPage = async (req, res) => {
+    const userLoggedIn = !!req.user;
+    return res.status(200).json({ userLoggedIn });
+  };
+  getSignUp = async (req, res) => {
+    const userLoggedIn = !!req.user;
+    return res.status(200).json({ userLoggedIn });
+  };
   postLogin = async (req, res) => {
     const { username, password } = req.body;
     if (!username || !password) {
-      return res.json(400).json({ message: "login info missing" });
+      return res.status(400).json({ message: "login info missing" });
     }
     const user = getUser(username);
     if (!user) {
@@ -23,7 +29,7 @@ class userController {
     const jwt_data = jwt.sign({ user_id: user.id }, process.env.SECRET, {
       expiresIn: "3h",
     });
-    return res.json({ data: jwt_data });
+    return res.status(200).json({ data: jwt_data });
   };
   postSignUp = async (req, res) => {
     const { username, password } = req.body;
@@ -34,9 +40,11 @@ class userController {
     const jwt_data = jwt.sign({ user_id: user.id }, process.env.SECRET, {
       expiresIn: "3h",
     });
-    return res.json({ data: jwt_data });
+    return res.status(200).json({ data: jwt_data });
   };
-  postLogout = async (req, res) => {};
+  postLogout = async (req, res) => {
+    res.status(200);
+  };
 }
 
 module.exports = new userController();

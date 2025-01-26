@@ -7,12 +7,14 @@ const {
   getAllPublishedBlogs,
   postNewBlog,
   editBlog,
+  deleteBlog,
 } = require("../controllers/blogController");
 const {
   addNewComment,
   getComments,
 } = require("../controllers/commentController");
 const { postBlogPost } = require("../db/queries");
+const { getBlogPage } = require("../controllers/pageController");
 
 const blogRouter = Router();
 
@@ -45,14 +47,12 @@ blogRouter.put("/:id", async (req, res) => {
 
 blogRouter.get("/:id", async (req, res) => {
   //visit specific blog
-  const blog = await getBlog(req, res);
-  const comments = await getComments(req, res);
-
-  return res.status(200).json({ blog: blog, comments, comments });
+  await getBlogPage(req, res);
 });
 
 blogRouter.delete("/:id", async (req, res) => {
   // delete a specific blog with id
+  await deleteBlog(req, res);
 });
 
 blogRouter.post("/comment/:id", async (req, res) => {

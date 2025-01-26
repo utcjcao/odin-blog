@@ -62,6 +62,12 @@ class blogController {
 
   putBlog = async (req, res) => {
     try {
+      const blogId = req.params.id;
+      if (!blogId) {
+        return res.status(400).json({
+          message: "Invalid id.",
+        });
+      }
       const existingBlog = await getBlog(blogId);
       if (!existingBlog) {
         return res.status(404).json({ message: "Blog not found." });

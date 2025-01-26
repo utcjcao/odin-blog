@@ -7,7 +7,6 @@ class pageController {
     try {
       const blog = await getBlog(req, res);
       const comments = await getComments(req, res);
-
       return res.status(200).json({ blog: blog, comments, comments });
     } catch (error) {
       return res
