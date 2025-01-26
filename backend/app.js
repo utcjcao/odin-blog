@@ -7,6 +7,7 @@ const { blogRouter } = require("./routers/blogRouter");
 
 const app = new express();
 
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/blogs", blogRouter);

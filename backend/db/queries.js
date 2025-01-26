@@ -30,7 +30,7 @@ async function getBlog(blogId) {
 }
 
 async function editBlog(blogId, title, content, published) {
-  await prisma.post.update({
+  await prisma.blogs.update({
     where: {
       id: blogId,
     },
@@ -44,7 +44,7 @@ async function editBlog(blogId, title, content, published) {
 }
 
 async function deleteBlog(blogId) {
-  await prisma.post.delete({
+  await prisma.blogs.delete({
     where: {
       id: blogId,
     },
@@ -83,7 +83,7 @@ async function getCommentsForBlog(blogId) {
 }
 
 async function postUser(username, password, admin) {
-  const user = await prisma.blogs.create({
+  const user = await prisma.users.create({
     data: {
       username: username,
       password: password,
@@ -94,7 +94,7 @@ async function postUser(username, password, admin) {
 }
 
 async function getUser(username) {
-  const user = await prisma.blogs.findFirst({
+  const user = await prisma.users.findFirst({
     where: {
       username: username,
     },
@@ -103,7 +103,7 @@ async function getUser(username) {
 }
 
 async function getUserById(id) {
-  const user = await prisma.blogs.findFirst({
+  const user = await prisma.users.findFirst({
     where: {
       id: id,
     },

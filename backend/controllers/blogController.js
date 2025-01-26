@@ -62,6 +62,9 @@ class blogController {
 
   putBlog = async (req, res) => {
     try {
+      if (!req.user || !req.user.username) {
+        return res.status(401).json({ message: "Unauthorized access." });
+      }
       const blogId = req.params.id;
       if (!blogId) {
         return res.status(400).json({
@@ -84,6 +87,9 @@ class blogController {
   };
   deleteBlog = async (req, res) => {
     try {
+      if (!req.user || !req.user.username) {
+        return res.status(401).json({ message: "Unauthorized access." });
+      }
       const blogId = req.params.id;
       if (!blogId) {
         return res.status(400).json({

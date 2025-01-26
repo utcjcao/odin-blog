@@ -17,6 +17,9 @@ class commentController {
 
   addNewComment = async (req, res) => {
     try {
+      if (!req.user || !req.user.username) {
+        return res.status(401).json({ message: "Unauthorized access." });
+      }
       const id = req.params.id;
       const { ownerUsername, content } = req.body;
 

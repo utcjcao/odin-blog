@@ -18,7 +18,8 @@ class userController {
     if (!username || !password) {
       return res.status(400).json({ message: "login info missing" });
     }
-    const user = getUser(username);
+    const user = await getUser(username);
+    console.log(user);
     if (!user) {
       return res.status(401).json({ message: "No user found" });
     }
@@ -36,14 +37,16 @@ class userController {
     if (!username || !password) {
       return res.status(400).json({ message: "sign up info missing!" });
     }
-    const user = await postUser(username, password, false);
+    const hashedPassword = await bcryptjs.hash(password, 10);
+    const user = await postUser(username, hashedPassword, false);
     const jwt_data = jwt.sign({ user_id: user.id }, process.env.SECRET, {
       expiresIn: "3h",
     });
     return res.status(200).json({ data: jwt_data });
   };
   postLogout = async (req, res) => {
-    res.status(200);
+    return res.status(200).json({});
+    // to be determined b/c i think we have to handle this in the frontend by clearing localstorage
   };
 }
 

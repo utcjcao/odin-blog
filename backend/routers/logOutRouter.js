@@ -6,6 +6,7 @@ const logOutRouter = Router();
 
 logOutRouter.post("", async (req, res) => {
   // logout account
+  console.log("hello");
   await postLogout(req, res);
 });
 

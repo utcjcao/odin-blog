@@ -1,12 +1,10 @@
 const { Router } = require("express");
 const path = require("path");
 const {
-  postDraftBlog,
   getBlog,
-  postPublishBlog,
   getAllPublishedBlogs,
   postNewBlog,
-  editBlog,
+  putBlog,
   deleteBlog,
 } = require("../controllers/blogController");
 const {
@@ -42,7 +40,7 @@ blogRouter.post("/new", async (req, res) => {
 // can use this to either publish/draft a page
 blogRouter.put("/:id", async (req, res) => {
   //update preexisitng blog with id
-  await editBlog(req, res);
+  await putBlog(req, res);
 });
 
 blogRouter.get("/:id", async (req, res) => {
@@ -57,7 +55,7 @@ blogRouter.delete("/:id", async (req, res) => {
 
 blogRouter.post("/comment/:id", async (req, res) => {
   // add comment to blog with id
-  await addNewComment(req.res);
+  await addNewComment(req, res);
 });
 
 module.exports = { blogRouter };
