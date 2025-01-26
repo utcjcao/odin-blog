@@ -1,2 +1,5 @@
 backend/node_modules
+frontend_reading/node_modules
+frontend_writing/node_modules
+
 backend/.env
