@@ -27,9 +27,14 @@ class userController {
     if (!isValidPassword) {
       return res.status(401).json({ message: "Invalid password" });
     }
-    const jwt_data = jwt.sign({ user_id: user.id }, process.env.SECRET, {
-      expiresIn: "3h",
-    });
+    const jwt_data = jwt.sign(
+      { user_id: user.id, username },
+      process.env.SECRET,
+      {
+        expiresIn: "3h",
+      }
+    );
+    console.log(jwt_data);
     return res.status(200).json({ data: jwt_data });
   };
   postSignUp = async (req, res) => {
@@ -38,11 +43,13 @@ class userController {
       return res.status(400).json({ message: "sign up info missing!" });
     }
     const hashedPassword = await bcryptjs.hash(password, 10);
-    const user = await postUser(username, hashedPassword, false);
-    const jwt_data = jwt.sign({ user_id: user.id }, process.env.SECRET, {
-      expiresIn: "3h",
-    });
-    return res.status(200).json({ data: jwt_data });
+    let user;
+    try {
+      user = await postUser(username, hashedPassword, false);
+    } catch (error) {
+      return res.status(500).json({ message: "account creation error" });
+    }
+    return res.status(200).json({ message: "user created" });
   };
   postLogout = async (req, res) => {
     return res.status(200).json({});

@@ -45,7 +45,7 @@ class blogController {
       if (!req.user || !req.user.username) {
         return res.status(401).json({ message: "Unauthorized access." });
       }
-      const { ownerUsername } = req.user.username;
+      const ownerUsername = req.user.username;
       const newBlogPost = await postBlogPost(
         ownerUsername,
         "new blog entry",
@@ -54,6 +54,7 @@ class blogController {
       );
       return res.status(201).json({ redirect: `/${newBlogPost.id}` });
     } catch (error) {
+      console.log(error);
       return res
         .status(500)
         .json({ message: "An error occurred while creating a new blog post." });
