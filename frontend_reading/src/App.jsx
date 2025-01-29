@@ -1,4 +1,6 @@
+import Main from "../pages/Main";
 import Error from "./pages/Error";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const App = () => {
   const routes = [
@@ -9,7 +11,7 @@ const App = () => {
       children: [
         {
           path: "",
-          element: <Home />,
+          element: <Main />,
         },
       ],
     },

@@ -1,7 +1,36 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { apiFetch } from "../api/api";
+import { useParams } from "react-router-dom";
+
+// this will display an individual blog page
 
 const Blog = () => {
-  return <div>Blog</div>;
+  const { id } = useParams();
+  const [blogData, setBlogData] = useState({
+    title: "",
+    content: "",
+    ownerUsername: "",
+    createdAt: "",
+  });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await apiFetch(`/blogs/${id}`);
+        setBlogData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [id]);
+  return (
+    <div>
+      <div>{blogData.title}</div>
+      <div>{blogData.content}</div>
+      <div>{blogData.ownerUsername}</div>
+      <div>{blogData.createdAt}</div>
+    </div>
+  );
 };
 
 export default Blog;

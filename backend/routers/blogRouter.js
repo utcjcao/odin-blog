@@ -2,12 +2,12 @@ const { Router } = require("express");
 const path = require("path");
 const {
   getAllPublishedBlogs,
+  getAllBlogs,
   postNewBlog,
   putBlog,
   deleteBlog,
 } = require("../controllers/blogController");
 const { addNewComment } = require("../controllers/commentController");
-const { postBlogPost } = require("../db/queries");
 const { getBlogPage } = require("../controllers/pageController");
 const { authenticateToken } = require("../middleware/authenticateToken");
 
@@ -32,6 +32,10 @@ blogRouter.get("", async (req, res) => {
 blogRouter.post("/new", authenticateToken, async (req, res) => {
   // create a new blog page
   await postNewBlog(req, res);
+});
+
+blogRouter.get("/user", authenticateToken, async (req, res) => {
+  await getAllBlogs(req, res);
 });
 
 // can use this to either publish/draft a page

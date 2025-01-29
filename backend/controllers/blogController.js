@@ -20,6 +20,17 @@ class blogController {
     }
   };
 
+  getAllBlogs = async (req, res) => {
+    try {
+      const blogs = await getBlogsForUser(req, res);
+      return res.status(200).json({ blogs: blogs });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "An error occurred while fetching blogs." });
+    }
+  };
+
   // get specific blog with id
   getBlog = async (req, res) => {
     try {
