@@ -8,6 +8,7 @@ async function apiFetch(endpoint, options = {}) {
         Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
         ...options.headers,
       },
+      mode: "cors",
       ...options,
     });
 

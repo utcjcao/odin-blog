@@ -1,35 +1,68 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { api } from "../api/blogApi";
 
 const NewBlog = () => {
   const [formData, setFormData] = useState({
     title: "",
     content: "",
+    id: -1,
+    published: false,
   });
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("http://your-api-url/posts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+  useEffect(() => {
+    const initializeBlog = async () => {
+      const response = await api.createBlog();
 
       if (!response.ok) {
         throw new Error("Failed to create post");
       }
+      setFormData((prev) => ({
+        ...prev,
+        id: response.id,
+      }));
+    };
+    initializeBlog();
+  }, []);
 
-      // Clear form after successful submission
-      setFormData({ title: "", content: "" });
+  const handlePublish = async (e) => {
+    e.preventDefault();
+    try {
+      setFormData((prev) => ({
+        ...prev,
+        published: false,
+      }));
+      const response = await api.updateBlog(formData.id, formData);
+
+      if (!response.ok) {
+        throw new Error("Failed to update post");
+      }
+
       alert("Post created successfully!");
+    } catch (error) {
+      alert("Error creating post: " + error.message);
+    }
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    try {
+      setFormData((prev) => ({
+        ...prev,
+        published: false,
+      }));
+      const response = await api.updateBlog(formData.id, formData);
+
+      if (!response.ok) {
+        throw new Error("Failed to save post");
+      }
+
+      alert("Post saved successfully!");
     } catch (error) {
       alert("Error creating post: " + error.message);
     }
   };
   return (
     <div>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form>
         <div>
           <input
             id="title"
@@ -61,7 +94,8 @@ const NewBlog = () => {
           />
         </div>
 
-        <button type="submit">Create Post</button>
+        <button onClick={handleSave}>Save Post</button>
+        <button onClick={handlePublish}>Publish Post</button>
       </form>
     </div>
   );
