@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 // needs to have links to main, draft blogs, write a blog, login, signup
@@ -19,10 +18,10 @@ const Header = () => {
             <Link to="/blogs/new">new</Link>
           </li>
           <li className="header-list-item">
-            <Link to="/cart">login</Link>
+            <Link to="/login">login</Link>
           </li>
           <li className="header-list-item">
-            <Link to="/cart">signup</Link>
+            <Link to="/signup">signup</Link>
           </li>
         </ul>
       </nav>

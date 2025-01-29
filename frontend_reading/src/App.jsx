@@ -1,5 +1,6 @@
 import Main from "../pages/Main";
-import Error from "./pages/Error";
+import Error from "../pages/Error";
+import Layout from "../pages/Layout";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const App = () => {
@@ -10,7 +11,7 @@ const App = () => {
       errorElement: <Error />,
       children: [
         {
-          path: "",
+          path: "/blogs",
           element: <Main />,
         },
       ],

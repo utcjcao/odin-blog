@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { apiFetch } from "../api/api";
+import { api } from "../api/blogApi";
 
 // main will display list of blogs that you can click on to access their individual blogs.
 
@@ -10,7 +10,7 @@ const Main = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await apiFetch(`/blogs/`);
+        const data = await api.getAllPublishedBlogs();
         setBlogs(data.blogs);
       } catch (error) {
         console.log(error);
@@ -20,14 +20,14 @@ const Main = () => {
   }, []);
 
   const blogItems = blogs.map((blog) => (
-    <ul key={blog.id} onClick={() => navigate(`/blogs/${blog.id}`)}>
+    <li key={blog.id} onClick={() => navigate(`/blogs/${blog.id}`)}>
       {blog.title}
-    </ul>
+    </li>
   ));
 
   return (
     <div>
-      <li>{blogItems}</li>
+      <ul>{blogItems}</ul>
     </div>
   );
 };
